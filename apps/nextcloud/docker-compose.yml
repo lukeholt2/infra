@@ -1,0 +1,24 @@
+version: "3"
+services:
+  nextcloud-aio-mastercontainer:
+    image: nextcloud/all-in-one:latest
+    restart: always
+    container_name: nextcloud-aio-mastercontainer # This line is not allowed to be changed as otherwise AIO will not work correctly
+    volumes:
+      - aio_mastercontainer:/mnt/docker-aio-config # This line is not allowed to be changed as otherwise the built-in backup solution will not work
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /usr/local/share/ca-certificates:/usr/local/share/ca-certificates
+    ports:
+      - 8090:8080
+    environment: 
+      - APACHE_PORT=11000 # Is needed when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else). See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
+      - NEXTCLOUD_TRUSTED_CACERTS_DIR=/usr/local/share/ca-certificates
+      - SKIP_DOMAIN_VALIDATION=true
+      - NEXTCLOUD_MEMORY_LIMIT=2048M
+      - NEXTCLOUD_DATADIR=/home/lholt/curator/nextcloud
+      
+volumes:
+  aio_mastercontainer:
+    #name: "nextcloud_aio_mastercontainer" # This line is not allowed to be changed as otherwise the built-in backup solution will not work
+
+

@@ -1,0 +1,10 @@
+---
+- name: Infra
+  hosts: all
+
+  roles:
+    - role: geerlingguy.security
+      become: true
+
+- name: Build the k3s cluster
+  import_playbook: 

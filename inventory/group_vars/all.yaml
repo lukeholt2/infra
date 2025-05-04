@@ -1,0 +1,17 @@
+cluster_context: k3s-ansible
+k3s_version: v1.30.4+k3s1
+api_endpoint: "{{ hostvars[groups['server'][0]]['ansible_host'] | default(groups['server'][0]) }}"
+extra_server_args: "--disable=traefik"
+extra_agent_args: ""
+registries_config_yaml:  |
+  mirrors:
+    docker.io:
+      endpoint:
+        - "http://gitlab.internal.oasis.com:5005"
+  configs:
+    "gitlab.internal.oasis.com:5005":
+      auth:
+        username: lukeholt
+        password: TOKEN
+      tls:
+        insecure_skip_verify: true

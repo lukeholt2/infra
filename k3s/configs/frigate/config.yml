@@ -1,0 +1,130 @@
+
+config: | 
+  auth:
+    enabled: True
+  mqtt:
+    enabled: False
+
+  birdseye:
+    mode: continuous
+
+  ffmpeg:
+    hwaccel_args: preset-rpi-64-h264 #Enable Hardware Acceleration
+
+  detect:
+    width: 1280
+    height: 720
+    fps: 5
+    max_disappeared: 18
+    stationary:
+      interval: 12
+
+  objects:
+    track:
+      - person
+      - car
+      - cat
+      - dog
+      - mouse
+
+  motion:
+    mask:
+      - 0,461,3,0,1919,0,1919,843,1699,492,1344,458,1346,336,973,317,869,375,866,432
+
+  live:
+    quality: 15
+
+  record:
+    enabled: True
+    expire_interval: 60
+    # Optional: Sync recordings with disk on startup and once a day (default: shown below).
+    sync_recordings: False
+    # Optional: Retention settings for recording
+    retain:
+      # Optional: Number of days to retain recordings regardless of events (default: shown below)
+      # NOTE: This should be set to 0 and retention should be defined in events section below
+      #       if you only want to retain recordings of events.
+      days: 1
+      mode: all
+    export:
+      timelapse_args: "-vf setpts=0.04*PTS -r 30"
+    # Optional: Event recording settings
+    events:
+      # Optional: Number of seconds before the event to include (default: shown below)
+      pre_capture: 5
+      # Optional: Number of seconds after the event to include (default: shown below)
+      post_capture: 5
+      # Optional: Objects to save recordings for. (default: all tracked objects)
+      # Optional: Retention settings for recordings of events
+      retain:
+        # Required: Default retention days (default: shown below)
+        default: 2
+        # Optional: Mode for retention. (default: shown below)
+        #   all - save all recording segments for events regardless of activity
+        #   motion - save all recordings segments for events with any detected motion
+        #   active_objects - save all recording segments for event with active/moving objects
+        #
+        # NOTE: If the retain mode for the camera is more restrictive than the mode configured
+        #       here, the segments will already be gone by the time this mode is applied.
+        #       For example, if the camera retain mode is "motion", the segments without motion are
+        #       never stored, so setting the mode to "all" here won't bring them back.
+        mode: motion
+
+  snapshots:
+    # Optional: Enable writing jpg snapshot to /media/frigate/clips (default: shown below)
+    enabled: True
+    # Optional: save a clean PNG copy of the snapshot image (default: shown below)
+    clean_copy: True
+    # Optional: print a timestamp on the snapshots (default: shown below)
+    timestamp: False
+    # Optional: draw bounding box on the snapshots (default: shown below)
+    bounding_box: True
+    # Optional: crop the snapshot (default: shown below)
+    crop: False
+    # Optional: height to resize the snapshot to (default: original size)
+    height: 175
+    # Optional: Restrict snapshots to objects that entered any of the listed zones (default: no required zones)
+    # Optional: Camera override for retention settings (default: global values)
+    retain:
+      # Required: Default retention days (default: shown below)
+      default: 2
+    # Optional: quality of the encoded jpeg, 0-100 (default: shown below)
+    quality: 70
+
+  cameras:
+    backyard:
+      enabled: true
+      ffmpeg:
+        output_args:
+          record: preset-record-generic-audio-aac
+        inputs:
+          - path: rtsp://cam2:{FRIGATE_RTSP_PASSWORD}@10.0.1.15:8554/unicast
+            roles:
+              - detect
+    garage:
+      enabled: true
+      ffmpeg:
+        output_args:
+          record: preset-record-generic-audio-aac
+        inputs:
+          - path: rtsp://cam3:{FRIGATE_RTSP_PASSWORD}@10.0.1.9:8554/unicast
+            roles:
+              - detect
+    kitchen:
+      enabled: false
+      ffmpeg:
+        output_args:
+          record: preset-record-generic-audio-aac
+        inputs:
+          - path: rtsp://cam4:{FRIGATE_RTSP_PASSWORD}@10.0.1.5:8554/unicast
+            roles:
+              - detect
+    livingRoom:
+      enabled: false
+      ffmpeg:
+        output_args:
+          record: preset-record-generic-audio-aac
+        inputs:
+          - path: rtsp://cam1:{FRIGATE_RTSP_PASSWORD2}@10.0.1.14:8554/unicast
+            roles:
+              - detect

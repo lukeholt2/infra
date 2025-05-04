@@ -1,0 +1,24 @@
+runners:
+  config: |
+      [[runners]]
+        pre_build_script = "apt-get update -y && apt-get install -y ca-certificates > /dev/null\n update-ca-certificates\n "
+        [runners.kubernetes]
+          # Run all containers with the privileged flag enabled.
+          privileged = true
+          helper_image = "registry.gitlab.com/gitlab-org/gitlab-runner/gitlab-runner-helper:arm64-latest"
+          image = "ubuntu"
+        [[runners.kubernetes.volumes.secret]]
+          name = "ca-tls"
+          mount_path = "/usr/local/share/ca-certificates"
+
+volumeMounts:
+  - name: ca-tls
+    mountPath:  /usr/local/share/ca-certificates
+
+volumes:
+  - name: gitlab-tls
+    secret:
+      secretName: gitlab-tls
+  - name: ca-tls
+    secret:
+      secretName: ca-tls

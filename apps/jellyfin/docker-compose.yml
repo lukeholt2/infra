@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+  jellyfin:
+    image: jellyfin/jellyfin
+    group_add:
+      - "107"
+      - "44"
+    container_name: jellyfin
+    network_mode: 'host'
+    volumes:
+      - /opt/jellyfin/config:/config
+      - /opt/jellyfin/cache:/cache
+      - type: bind
+        source: /mnt/storage/media
+        target: /media
+        read_only: true
+    restart: 'unless-stopped'
+    devices:
+      - /dev/dri/renderD128:/dev/dri/renderD128
+    # Optional - alternative address used for autodiscovery
+#    environment:
+#      - JELLYFIN_PublishedServerUrl=https://jellyfin.internal.oasis.com

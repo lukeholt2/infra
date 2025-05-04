@@ -1,0 +1,69 @@
+configmap:
+  config:
+    # -- Store homer configuration as a ConfigMap
+    enabled: true
+    # -- Homer configuration. See [image documentation](https://github.com/bastienwirtz/homer/blob/main/docs/configuration.md) for more information.
+    # @default -- See values.yaml
+    data:
+      config.yml: | 
+        title: "Home"
+        subtitle: "Homer Dashboard"
+        logo: "logo.png"
+        header: true
+        # Optional navbar
+        # links: [] # Allows for navbar (dark mode, layout, and search) without any links
+        links:
+          - name: "GitLab"
+            icon: "fab fa-gitlab"
+            url: "https://gitlab.internal.oasis.com"
+            target: "_blank" # optional html a tag target attribute
+        # Services
+        # First level array represent a group.
+        # Leave only a "items" key if not using group (group name, icon & tagstyle are optional, section separation will not be displayed).
+        services:
+          - name: "Applications"
+            icon: "fas fa-cloud"
+            items:
+              - name: "Nextcloud"
+                logo: "assets/tools/sample.png"
+                tag: "app"
+                keywords: "Self hosted office suite"
+                url: "https://nextcloud.internal.oasis.com"
+                target: "_blank" # optional html a tag target attribute
+              - name: "Jellyfin"
+                logo: "assets/tools/sample.png"
+                tag: "app"
+                keywords: "Media streaming service"
+                url: "https://jellyfin.internal.oasis.com"
+                target: "_blank" # optional html a tag target attribute
+              - name: "ExpenseApp"
+                logo: "assets/tools/sample.png"
+                tag: "app"
+                keywords: "Expense Track & Budgeting"
+                url: "https://expenseapp.com"
+              - name: "Vaultwarden"
+                logo: "assets/tools/sample.png"
+                tag: "app"
+                keywords: "VaultWarden Password Manager"
+                url: "https://vaultwarden.internal.oasis.com"
+                target: "_blank" # optional html a tag target attribute
+          - name: "Monitoring"
+            icon: "fas fa-server"
+            items:
+              - name: "Pi-hole"
+                logo: "assets/tools/sample.png"
+                # subtitle: "Network-wide Ad Blocking" # optional, if no subtitle is defined, PiHole statistics will be shown
+                url: "http://10.0.1.7/admin"
+                apikey: $PIHOLE_KEY 
+                type: "PiHole"
+                target: "_blank"
+              - name: "Frigate"
+                logo: "assets/tools/sample.png"
+                keywords: "Internal CCTV"
+                url: "https://frigate.internal.oasis.com"
+                target: "_blank" # optional html a tag target attribute
+              - name: "Mattermost"
+                logo: "assets/tools/sample.png"
+                keywords: "Internal Mattermost"
+                url: "https://mattermost.internal.oasis.com"
+                target: "_blank" # optional html a tag target attribute

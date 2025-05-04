@@ -1,0 +1,25 @@
+encryptionsalt: v1:BvensGvNe8U=:v1:4gLgLB6CrqJY8Mhr:exHH0zDOeXrKggWbip79Sx+3oXhW0A==
+config:
+  infra:vaultWarden:
+    domain: vaultwarden.internal.oasis.com
+  infra:expenseapp:
+    api_version: 2.1.3
+    ui_version: 2.0.3
+    url: "expenseapp.com"
+  infra:frigate_pass:
+    secure: v1:zp8wCR2+gOnHRQIo:TCtNKddy3bKmcq728Teb8IrujBqeOrp44d8E2dMiVReeVLM=
+  infra:frigate_pass2:
+    secure: v1:Fj7pPPOq4nofgyeu:bN3h43MoVv4FUBzNMMFOQMw6H1C23jCEllkKtft9sHg=
+  infra:gitlab-runner:
+    gitlabUrl: https://gitlab.internal.oasis.com
+    runnerToken:
+      secure: v1:CYYYuTx5F0f4z47X:iKMtH7UDYicVKCQlqJWyZ8aSjXpwFhN19enZy8j2/qgX1DYlxrBeCnlulPI=
+  infra:k3s_token:
+    secure: v1:y8i4e3DQxQt5xdKM:30J4phrKPJ85YsAUA2ZUubHTfVlepYUsGQTnMOMHgAt8YrYS
+  infra:pihole_key:
+    secure: v1:PlF6x2O78EppHKDP:Ys9tNmtZ1uE94fizCrt9e1glI0YJ8TNU9lZsSOnJQlZADQ9H95MV0feX8UnPX88uasDr8B5P1SQMKagaGZW6y3X8gEx2pBrQDESic3OaDZE=
+  infra:postgres:
+    db: ExpenseDatabase
+    password:
+      secure: v1:4gU22pD45YqKFVeG:OSQmLCRxfsjaIrEIt2U/j4wIe2LwRZBKoiWY4CVavCM=
+    user: postgres
